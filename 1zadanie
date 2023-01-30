@@ -1,0 +1,76 @@
+// 1. Реализовать набор основных действий для работы с деком в виде программы, имеющей следующий интерфейс:
+
+#include <deque>
+#include <iostream>
+
+using namespace std;
+
+void main() {
+	setlocale(LC_ALL, "rus");
+	bool flag = true;
+	int element = 0;
+	int index = 0;
+	deque<int> dq;
+	while (flag) {
+		int task = 0;
+		cout << "1.Добавить элемент в начало\n";
+		cout << "2.Добавить элемент в конец\n";
+		cout << "3.Удалить элемент из начала\n";
+		cout << "4.Удалить элемент с конца\n";
+		cout << "5.Вывести элемент с номером N\n";
+		cout << "6.Вывести содержимое дека\n";
+		cout << "7.Вывести количество элементов\n";
+		cout << "8.Очистить дек\n";
+		cout << "9.Выход\n";
+		cout << "Выберите действие - ";
+		cin >> task;
+		if (!(task > 9) || (task < 0)) {
+			switch (task) {
+			case 1:
+				cout << "Введите элемент - ";
+				cin >> element;
+				dq.push_front(element);
+				break;
+			case 2:
+				cout << "Введите элемент - ";
+				cin >> element;
+				dq.push_back(element);
+				break;
+			case 3:
+				dq.pop_front();
+				break;
+			case 4:
+				dq.pop_back();
+				break;
+			case 5:
+				cout << "Введите индекс (max - " << dq.size() << ") - ";
+				cin >> index;
+				cout << "\n" << dq.at(index);
+			case 6:
+				//сделается это в конце
+				break;
+			case 7:
+				cout << dq.size();
+				break;
+			case 8:
+				dq.clear();
+				cout << "список очищен!\n";
+				break;
+			case 9:
+				flag = false;
+				break;
+
+			default:
+				break;
+			}
+			cout << "\nтекущий deque - ";
+			for (int i = 0; i < dq.size(); i++)
+				cout << dq.at(i) << " ";
+			cout << "\n\n";
+		}
+		else {
+			cout << "Введите число в диапозоне от 1 до 9!\n";
+		}
+		
+	}
+}
