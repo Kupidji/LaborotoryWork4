@@ -1,0 +1,57 @@
+// 4. Считать из текстового файла целые числа и занести их в дек. 
+// Вывести список на экран. Вставить перед всеми четными 
+// элементами дека значение -1 и снова вывести его на экран. 
+
+#include <fstream>
+#include <deque>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+void printDeq(deque<int> dq) {
+	for (int i = 0; i < dq.size(); i++) {
+		cout << dq.at(i) << " ";
+	}
+}
+
+void main() {
+	setlocale(LC_ALL, "rus");
+	deque<int> dq;
+	int str;
+	int data;
+	ofstream f1;
+	ifstream f2;
+
+	// создаю файл
+	cout << "Введите строку в файл (числа)";
+	cin >> str;
+	f1.open("deq.txt");
+	f1 << str;
+	f1.close();
+
+	//считываю данные из файла
+	f2.open("deq.txt");
+	f2 >> data;
+	f2.close(); 
+
+	string dataStr = to_string(data);
+	for (int i = 0; i < dataStr.length(); i++) {
+		dq.push_front(data % 10);
+		data /= 10;
+	}
+
+	printDeq(dq);
+
+	deque<int>::iterator it = dq.begin();
+	int n = dataStr.length();
+	while (n--) {
+		if (dq.at(n) % 2 == 0) {
+			it = dq.begin() + n;
+			it = dq.insert(it, -1);
+		}	
+	}
+
+	cout << "\n";
+	printDeq(dq);
+}
