@@ -1,0 +1,70 @@
+// 6.Считать из текстового файла целые числа и занести их в дек. Вывести дек на экран. 
+// Удалить из дека все элементы, значение которых меньше заданного значения k 
+// и вывести дек на экран. Посчитать в полученном деке количество элементов, равных значению N.
+
+#include <fstream>
+#include <deque>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+void printDeq(deque<int> dq) {
+	for (int i = 0; i < dq.size(); i++) {
+		cout << dq.at(i) << " ";
+	}
+}
+
+void main() {
+	setlocale(LC_ALL, "rus");
+	deque<int> dq;
+	int str;
+	int data;
+	int K, N;
+	int countOfN = 0;
+	ofstream f1;
+	ifstream f2;
+
+	// создаю файл
+	cout << "Введите строку в файл (числа)";
+	cin >> str;
+	f1.open("deq.txt");
+	f1 << str;
+	f1.close();
+
+	cout << "Введите значение K - ";
+	cin >> K;
+	cout << "Введите значение N - ";
+	cin >> N;
+
+	//считываю данные из файла
+	f2.open("deq.txt");
+	f2 >> data;
+	f2.close(); 
+
+	//заполняю дек
+	string dataStr = to_string(data);
+	for (int i = 0; i < dataStr.length(); i++) {
+		dq.push_front(data % 10);
+		data /= 10;
+	}
+
+	printDeq(dq);
+
+	deque<int>::iterator it = dq.begin();
+	int n = dataStr.length();
+	while (n--) {
+		if (dq.at(n) < K) {
+			it = dq.begin() + n;
+			dq.erase(it);
+			//it = dq.insert(it, -1);
+		}	
+		if (dq.at(n) == N) {
+			countOfN++;
+		}
+	}
+
+	cout << "\n";
+	printDeq(dq);
+	cout << "\nКоличество элементов N(" << N << ") = " << countOfN;
+}
